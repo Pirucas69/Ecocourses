@@ -323,6 +323,25 @@ try{
 }catch(e){}
 
 pickMenu();
+fetch('https://ecocourses-api.pirucas699.workers.dev/promotions')
+.then(response => {
+if (!response.ok) throw new Error('Serveur indisponible');
+return response.json();
+})
+.then(data => {
+const notice = document.querySelector('#promos .notice');
+if (!notice) return;
+
+if (data.offres && data.offres.length > 0) {
+  notice.textContent = '✅ Promotions reçues du serveur ÉcoCourses.';
+} else {
+  notice.textContent = '✅ Serveur connecté. Les promotions réelles ne sont pas encore disponibles.';
+}
+
+})
+.catch(() => {
+console.log('Le serveur ÉcoCourses est momentanément indisponible.');
+});
 </script>
 </body>
 </html>
