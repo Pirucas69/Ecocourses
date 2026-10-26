@@ -1,188 +1,328 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#176b43">
-  <title>ÉcoCourses</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f7f3;
-      color: #203329;
-    }
-    header {
-      background: #176b43;
-      color: white;
-      padding: 25px 20px;
-      border-radius: 0 0 25px 25px;
-    }
-    header h1 { margin: 0 0 8px; font-size: 29px; }
-    header p { margin: 0; line-height: 1.5; }
-    main { padding: 18px; max-width: 600px; margin: auto; }
-    .card {
-      background: white;
-      padding: 18px;
-      margin-bottom: 16px;
-      border-radius: 16px;
-      box-shadow: 0 3px 12px #0000000d;
-    }
-    h2 { font-size: 19px; margin-top: 0; }
-    label { display: block; margin: 12px 0 6px; font-weight: bold; }
-    select, input, button {
-      width: 100%;
-      padding: 13px;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-    select, input {
-      border: 1px solid #cbd8ce;
-      background: white;
-    }
-    button {
-      border: none;
-      background: #176b43;
-      color: white;
-      font-weight: bold;
-      margin-top: 12px;
-      cursor: pointer;
-    }
-    button.secondary { background: #e3eee6; color: #176b43; }
-    .dish {
-      padding: 12px 0;
-      border-bottom: 1px solid #e8eee9;
-      line-height: 1.5;
-    }
-    .dish:last-child { border-bottom: none; }
-    .badge {
-      display: inline-block;
-      background: #e3eee6;
-      color: #176b43;
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-    #shoppingList { padding-left: 22px; line-height: 1.9; }
-    .note { font-size: 13px; color: #66756b; line-height: 1.5; }
-    footer { text-align: center; padding: 20px; color: #66756b; font-size: 12px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#176b43">
+<title>ÉcoCourses — menus portugais et budget</title>
+<style>
+:root{--green:#176b43;--green2:#e5f3e9;--cream:#f5f7f2;--ink:#203329;--muted:#65746a;--orange:#f5a623;--line:#dfe8e1;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,Arial,sans-serif;line-height:1.45}
+header{background:linear-gradient(135deg,#145c39,#218653);color:#fff;padding:24px 18px 22px;border-radius:0 0 24px 24px}
+.brand{font-size:29px;font-weight:850;letter-spacing:-.6px;margin:0}
+header p{margin:5px 0 0;opacity:.95}
+main{max-width:760px;margin:auto;padding:15px}
+nav{display:flex;gap:8px;overflow:auto;padding:3px 0 12px}
+nav button{white-space:nowrap;width:auto;margin:0;padding:10px 13px;background:#fff;color:var(--green);border:1px solid var(--line)}
+nav button.active{background:var(--green);color:#fff}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px;margin-bottom:14px;box-shadow:0 3px 12px #183d2610}
+h2{font-size:19px;margin:0 0 12px}
+h3{font-size:16px;margin:0 0 5px}
+p{margin:7px 0}
+label{display:block;font-weight:700;margin:12px 0 5px}
+select,input{width:100%;padding:12px;border:1px solid #cbd9ce;border-radius:10px;background:#fff;font:inherit;color:var(--ink)}
+button,.button{width:100%;border:0;border-radius:11px;padding:13px 15px;background:var(--green);color:white;font:inherit;font-weight:750;cursor:pointer;margin-top:10px;text-align:center;display:inline-block;text-decoration:none}
+button.secondary{background:var(--green2);color:var(--green)}
+button.light{background:#f2f5f2;color:var(--ink);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric{background:var(--green2);border-radius:12px;padding:12px}
+.metric strong{font-size:21px;display:block;color:var(--green)}
+.small{font-size:13px;color:var(--muted)}
+.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:var(--green2);color:var(--green);font-size:12px;font-weight:750}
+.recipe{border:1px solid var(--line);border-radius:13px;padding:13px;margin:9px 0}
+.recipe-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.recipe p{font-size:14px}
+.recipe ul{margin:7px 0;padding-left:20px;font-size:14px}
+.checkrow{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid #edf1ed}
+.checkrow input{width:20px;height:20px;margin-top:2px;flex:0 0 auto}
+.checkrow span{flex:1}
+.store{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.store:last-child{border:0}
+.store a{color:var(--green);font-weight:700}
+.notice{background:#fff6df;border:1px solid #f1dfaa;padding:12px;border-radius:12px;font-size:13px}
+.hidden{display:none!important}
+footer{text-align:center;padding:16px 20px 30px;color:var(--muted);font-size:12px}
+@media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.brand{font-size:26px}.card{padding:14px}}
+</style>
 </head>
 <body>
-  <header>
-    <h1>🛒 ÉcoCourses</h1>
-    <p>Mange bien, cuisine portugais et dépense moins ! 🇵🇹</p>
-  </header>
+<header>
+  <p class="pill" style="background:#ffffff25;color:white">🇵🇹 Cuisine familiale • 🇩🇪 Allemagne • 🇱🇺 Luxembourg</p>
+  <h1 class="brand">🛒 ÉcoCourses</h1>
+  <p>Des menus portugais malins pour mieux gérer le budget.</p>
+</header>
+<main>
+<nav aria-label="Sections">
+  <button class="active" data-tab="menus">🍲 Menus</button>
+  <button data-tab="courses">🧾 Liste de courses</button>
+  <button data-tab="promos">🏷️ Promotions</button>
+  <button data-tab="reglages">⚙️ Réglages</button>
+</nav>
 
-  <main>
-    <section class="card">
-      <h2>📍 Mes courses</h2>
-      <label for="country">Pays des promotions</label>
-      <select id="country">
-        <option value="both">Allemagne et Luxembourg</option>
-        <option value="de">Allemagne</option>
-        <option value="lu">Luxembourg</option>
-      </select>
+<section id="menus" class="tab">
+  <div class="card">
+    <h2>👨‍👩‍👧‍👦 Ton menu de la semaine</h2>
+    <p class="small">Recettes portugaises principalement, avec des repas rapides les soirs chargés.</p>
+    <div class="grid">
+      <div><label for="people">Personnes</label><select id="people"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+      <div><label for="quick">Repas rapides</label><select id="quick"><option value="2">2 soirs</option><option value="3" selected>3 soirs</option><option value="4">4 soirs</option><option value="5">5 soirs</option></select></div>
+    </div>
+    <button id="generate">🔄 Générer un autre menu</button>
+  </div>
+  <div id="menuList"></div>
+  <div class="card">
+    <h2>💶 Budget indicatif</h2>
+    <div class="grid">
+      <div class="metric"><span class="small">Estimation du menu</span><strong id="budget">—</strong></div>
+      <div class="metric"><span class="small">Par personne</span><strong id="perPerson">—</strong></div>
+    </div>
+    <p class="small">Estimation indicative, pas un prix de magasin. Le total réel dépendra des marques, des quantités déjà présentes chez toi et des promotions vérifiées.</p>
+  </div>
+</section>
 
-      <label for="radius">Rayon de recherche</label>
-      <select id="radius">
-        <option value="20">20 km</option>
-      </select>
+<section id="courses" class="tab hidden">
+  <div class="card">
+    <h2>🧾 Ta liste de courses</h2>
+    <p class="small">Les ingrédients sont regroupés à partir des recettes sélectionnées. Coche ce que tu as déjà acheté.</p>
+    <div id="shoppingList"></div>
+    <button id="copyList">📋 Copier la liste</button>
+    <button id="resetChecks" class="secondary">Réinitialiser les cases</button>
+    <p id="copyMessage" class="small" aria-live="polite"></p>
+  </div>
+</section>
 
-      <label for="people">Nombre de personnes</label>
-      <select id="people">
-        <option value="1">1 personne</option>
-        <option value="2">2 personnes</option>
-        <option value="3">3 personnes</option>
-        <option value="4" selected>4 personnes</option>
-        <option value="5">5 personnes</option>
-        <option value="6">6 personnes</option>
-      </select>
-      <p class="note">Les promotions réelles seront ajoutées lorsque nous connecterons les sources des magasins.</p>
-    </section>
+<section id="promos" class="tab hidden">
+  <div class="card">
+    <h2>🏷️ Promotions des magasins</h2>
+    <p>Choisis les catalogues à consulter. Ces liens ouvrent les pages des enseignes ou un comparateur ; cette version ne récupère pas encore automatiquement leurs prix.</p>
+    <div class="notice">⚠️ Pour éviter les fausses économies, ÉcoCourses n'affiche pas de prix promotionnels inventés. La connexion automatique aux offres sera ajoutée après vérification des sources accessibles.</div>
 
-    <section class="card">
-      <h2>🍲 Mes menus portugais</h2>
-      <p>Des idées pour la semaine, avec des repas rapides quand tu manques de temps.</p>
-      <div id="menus">
-        <div class="dish">🇵🇹 <b>Lundi — Frango assado</b><br>Poulet rôti avec pommes de terre.</div>
-        <div class="dish">🇵🇹 <b>Mardi — Bacalhau à Brás</b><br>Morue, pommes de terre et œufs.</div>
-        <div class="dish">⏱️ <b>Mercredi — Pâtes rapides</b><br>Pâtes à la tomate et au thon.</div>
-        <div class="dish">🇵🇹 <b>Jeudi — Bifanas</b><br>Sandwichs portugais au porc.</div>
-        <div class="dish">⏱️ <b>Vendredi — Omelette</b><br>Omelette, salade et pain.</div>
-        <div class="dish">🇵🇹 <b>Samedi — Caldo verde</b><br>Soupe portugaise au chou et au chouriço.</div>
-        <div class="dish">🇵🇹 <b>Dimanche — Arroz de pato</b><br>Riz traditionnel au canard.</div>
-      </div>
-      <button onclick="generateMenus()">🔄 Changer les menus</button>
-    </section>
+    <div class="store"><div><b>🇩🇪 Lidl Allemagne</b><div class="small">Prospectus et offres</div></div><a href="https://www.lidl.de/c/online-prospekte/s10005610/" target="_blank" rel="noopener">Ouvrir ↗</a></div>
 
-    <section class="card">
-      <h2>🧾 Ma liste de courses</h2>
-      <p>Une première liste d'ingrédients à adapter à tes menus.</p>
-      <ul id="shoppingList">
-        <li>Poulet</li>
-        <li>Morue</li>
-        <li>Pommes de terre</li>
-        <li>Œufs</li>
-        <li>Pâtes</li>
-        <li>Tomates</li>
-        <li>Thon</li>
-        <li>Porc</li>
-        <li>Chou vert</li>
-        <li>Riz</li>
-      </ul>
-      <button class="secondary" onclick="copyList()">📋 Copier ma liste</button>
-      <p id="message" class="note"></p>
-    </section>
-  </main>
+    <div class="store"><div><b>🇩🇪 ALDI SÜD</b><div class="small">Offres en cours</div></div><a href="https://www.aldi-sued.de/angebote" target="_blank" rel="noopener">Ouvrir ↗</a></div>
 
-  <footer>
-    ÉcoCourses · La cuisine portugaise au meilleur prix 🇵🇹
-  </footer>
+    <div class="store"><div><b>🇩🇪 EDEKA</b><div class="small">Offres et prospectus selon magasin</div></div><a href="https://www.edeka.de/angebote/" target="_blank" rel="noopener">Ouvrir ↗</a></div>
 
-  <script>
-    const menuSets = [
-      [
-        ["🇵🇹 Lundi — Frango assado", "Poulet rôti avec pommes de terre."],
-        ["🇵🇹 Mardi — Bacalhau à Brás", "Morue, pommes de terre et œufs."],
-        ["⏱️ Mercredi — Pâtes rapides", "Pâtes à la tomate et au thon."],
-        ["🇵🇹 Jeudi — Bifanas", "Sandwichs portugais au porc."],
-        ["⏱️ Vendredi — Omelette", "Omelette, salade et pain."],
-        ["🇵🇹 Samedi — Caldo verde", "Soupe au chou et au chouriço."],
-        ["🇵🇹 Dimanche — Arroz de pato", "Riz traditionnel au canard."]
-      ],
-      [
-        ["🇵🇹 Lundi — Almôndegas", "Boulettes de viande avec riz."],
-        ["⏱️ Mardi — Salade de thon", "Salade rapide avec pommes de terre."],
-        ["🇵🇹 Mercredi — Arroz de frango", "Riz au poulet à la portugaise."],
-        ["🇵🇹 Jeudi — Bacalhau no forno", "Morue au four avec légumes."],
-        ["⏱️ Vendredi — Pâtes au jambon", "Un repas rapide pour le soir."],
-        ["🇵🇹 Samedi — Feijoada", "Ragoût portugais aux haricots."],
-        ["🇵🇹 Dimanche — Carne assada", "Viande rôtie avec pommes de terre."]
-      ]
-    ];
+    <div class="store"><div><b>🇩🇪 REWE</b><div class="small">Offres selon code postal</div></div><a href="https://www.rewe.de/angebote/" target="_blank" rel="noopener">Ouvrir ↗</a></div>
 
-    function generateMenus() {
-      const current = document.getElementById("menus").dataset.set === "1" ? 0 : 1;
-      const selected = menuSets[current];
-      document.getElementById("menus").dataset.set = String(current);
-      document.getElementById("menus").innerHTML = selected.map(item =>
-        '<div class="dish"><b>' + item[0] + '</b><br>' + item[1] + '</div>'
-      ).join("");
-    }
+    <div class="store"><div><b>🇱🇺 Cactus</b><div class="small">Offres au Luxembourg</div></div><a href="https://www.cactus.lu/" target="_blank" rel="noopener">Ouvrir ↗</a></div>
 
-    async function copyList() {
-      const items = [...document.querySelectorAll("#shoppingList li")]
-        .map(item => "• " + item.textContent).join("\n");
-      try {
-        await navigator.clipboard.writeText(items);
-        document.getElementById("message").textContent = "Liste copiée ! Tu peux la coller dans tes notes.";
-      } catch (e) {
-        document.getElementById("message").textContent = items;
-      }
-    }
-  </script>
+    <div class="store"><div><b>🇱🇺 Auchan Luxembourg</b><div class="small">Offres et catalogue</div></div><a href="https://www.auchan.lu/" target="_blank" rel="noopener">Ouvrir ↗</a></div>
+
+    <div class="store"><div><b>🇱🇺 Delhaize Luxembourg</b><div class="small">Offres et magasins</div></div><a href="https://www.delhaize.lu/" target="_blank" rel="noopener">Ouvrir ↗</a></div>
+
+    <div class="store"><div><b>🇱🇺 Comparateur Caddie.lu</b><div class="small">Promotions de plusieurs enseignes</div></div><a href="https://www.caddie.lu/" target="_blank" rel="noopener">Ouvrir ↗</a></div>
+  </div>
+</section>
+
+<section id="reglages" class="tab hidden">
+  <div class="card">
+    <h2>⚙️ Préférences</h2>
+    <label for="country">Pays pour les courses</label>
+    <select id="country">
+      <option value="both">Allemagne et Luxembourg</option>
+      <option value="de">Allemagne</option>
+      <option value="lu">Luxembourg</option>
+    </select>
+
+    <label for="radius">Rayon souhaité</label>
+    <select id="radius">
+      <option>20 km</option>
+      <option>30 km</option>
+      <option>40 km</option>
+      <option>50 km</option>
+    </select>
+
+    <label for="budgetLimit">Budget hebdomadaire souhaité (€)</label>
+    <input id="budgetLimit" type="number" min="0" step="5" value="100">
+
+    <button id="saveSettings">Enregistrer les préférences</button>
+    <p id="settingsMessage" class="small" aria-live="polite"></p>
+  </div>
+
+  <div class="card">
+    <h2>ℹ️ À savoir</h2>
+    <p>Cette première version fonctionne directement dans ton navigateur et n'a pas besoin de compte.</p>
+    <p>Les menus, ingrédients et estimations sont générés localement. Pour proposer les promotions réellement disponibles près de chez toi, il faudra connecter des sources de données fiables et définir une localisation ou un code postal.</p>
+  </div>
+</section>
+</main>
+
+<footer>ÉcoCourses • Cuisine portugaise et économies au quotidien 🇵🇹<br>Prototype — les prix et promotions réels ne sont pas encore connectés.</footer>
+
+<script>
+const recipes = [
+ {name:"Frango assado à portuguesa",type:"portugais",mins:55,cost:12,desc:"Poulet rôti au paprika, ail et citron, avec pommes de terre.",items:[["Poulet entier","1"],["Pommes de terre","1.5 kg"],["Citron","1"],["Ail","1 tête"],["Paprika","1 petit pot"]]},
+
+ {name:"Bacalhau à Brás",type:"portugais",mins:35,cost:13,desc:"Morue émiettée, pommes allumettes, oignons et œufs.",items:[["Morue dessalée","600 g"],["Pommes de terre","800 g"],["Œufs","6"],["Oignons","2"],["Olives noires","1 petit pot"]]},
+
+ {name:"Pâtes au thon express",type:"rapide",mins:20,cost:6,desc:"Pâtes, thon, tomate et herbes : prêt en peu de temps.",items:[["Pâtes","500 g"],["Thon en boîte","2 boîtes"],["Tomates concassées","1 boîte"],["Oignon","1"]]},
+
+ {name:"Bifanas portugaises",type:"portugais",mins:25,cost:10,desc:"Émincés de porc marinés à l'ail et au paprika, dans du pain.",items:[["Escalopes de porc","600 g"],["Petits pains","4"],["Ail","3 gousses"],["Paprika","1 petit pot"]]},
+
+ {name:"Omelette et salade",type:"rapide",mins:15,cost:6,desc:"Omelette simple, salade croquante et pain.",items:[["Œufs","8"],["Salade","1"],["Tomates","3"],["Pain","1"]]},
+
+ {name:"Caldo verde",type:"portugais",mins:40,cost:9,desc:"Soupe réconfortante aux pommes de terre, chou et chouriço.",items:[["Pommes de terre","1 kg"],["Chou vert ou kale","1"],["Chouriço","200 g"],["Oignon","1"],["Ail","2 gousses"]]},
+
+ {name:"Arroz de pato",type:"portugais",mins:70,cost:16,desc:"Riz au canard, parfumé et gratiné au four.",items:[["Canard (cuisses ou effiloché)","700 g"],["Riz","400 g"],["Oignon","1"],["Carotte","1"],["Chouriço","100 g"]]},
+
+ {name:"Arroz de frango",type:"portugais",mins:35,cost:10,desc:"Riz mijoté au poulet, façon familiale portugaise.",items:[["Poulet","600 g"],["Riz","350 g"],["Tomates concassées","1 boîte"],["Oignon","1"],["Carotte","2"]]},
+
+ {name:"Pâtes à la tomate et au fromage",type:"rapide",mins:20,cost:5,desc:"Un plat rapide avec une sauce tomate maison.",items:[["Pâtes","500 g"],["Tomates concassées","1 boîte"],["Fromage râpé","150 g"],["Oignon","1"]]},
+
+ {name:"Almôndegas com arroz",type:"portugais",mins:35,cost:11,desc:"Boulettes de viande en sauce tomate, servies avec du riz.",items:[["Viande hachée","500 g"],["Riz","350 g"],["Tomates concassées","1 boîte"],["Oignon","1"],["Œufs","1"]]},
+
+ {name:"Salade de thon et pommes de terre",type:"rapide",mins:20,cost:7,desc:"Salade complète, idéale quand on manque de temps.",items:[["Thon en boîte","2 boîtes"],["Pommes de terre","700 g"],["Œufs","4"],["Tomates","3"],["Salade","1"]]},
+
+ {name:"Carne de porco à alentejana (version maison)",type:"portugais",mins:45,cost:15,desc:"Porc mariné, pommes de terre et coriandre. Palourdes en option.",items:[["Porc en dés","600 g"],["Pommes de terre","800 g"],["Ail","4 gousses"],["Coriandre","1 bouquet"],["Citron","1"]]},
+
+ {name:"Tosta mista et soupe",type:"rapide",mins:15,cost:6,desc:"Croque jambon-fromage accompagné d'une soupe prête ou maison.",items:[["Pain de mie","8 tranches"],["Jambon","4 tranches"],["Fromage","4 tranches"],["Soupe de légumes","1 brique"]]},
+
+ {name:"Peixe no forno",type:"portugais",mins:40,cost:13,desc:"Poisson au four avec pommes de terre, citron et oignons.",items:[["Filets de poisson","600 g"],["Pommes de terre","1 kg"],["Oignons","2"],["Citron","1"]]}
+];
+
+let currentMenu=[];
+
+const fmt=n=>new Intl.NumberFormat('fr-FR',{
+ style:'currency',
+ currency:'EUR',
+ maximumFractionDigits:0
+}).format(n);
+
+function pickMenu(){
+ const people=Number(document.getElementById('people').value);
+ const quick=Number(document.getElementById('quick').value);
+
+ const quickRecipes=recipes.filter(r=>r.type==='rapide');
+ const mainRecipes=recipes.filter(r=>r.type==='portugais');
+
+ const shuffled=a=>[...a].sort(()=>Math.random()-.5);
+
+ currentMenu=shuffled(mainRecipes).slice(0,7-quick)
+   .concat(shuffled(quickRecipes).slice(0,quick));
+
+ currentMenu=shuffled(currentMenu);
+
+ renderMenu(people);
+ renderShopping();
+}
+
+function renderMenu(people){
+ const days=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+
+ document.getElementById('menuList').innerHTML=currentMenu.map((r,i)=>`
+ <article class="card recipe">
+   <div class="recipe-head">
+     <div>
+       <span class="pill">${r.type==='rapide'?'⏱️ Repas rapide':'🇵🇹 Recette portugaise'}</span>
+       <h3 style="margin-top:7px">${days[i]} — ${r.name}</h3>
+     </div>
+     <span class="small">${r.mins} min</span>
+   </div>
+   <p>${r.desc}</p>
+   <p class="small">Budget indicatif pour ${people} personnes : ${fmt(r.cost*people/4)}.</p>
+   <details>
+     <summary>Voir les ingrédients</summary>
+     <ul>${r.items.map(it=>`<li>${it[0]} — ${it[1]} (quantité indicative pour 4 personnes)</li>`).join('')}</ul>
+   </details>
+ </article>`).join('');
+
+ const total=currentMenu.reduce((s,r)=>s+r.cost*people/4,0);
+
+ document.getElementById('budget').textContent=fmt(total);
+ document.getElementById('perPerson').textContent=fmt(total/people);
+}
+
+function renderShopping(){
+ const map=new Map();
+
+ currentMenu.forEach(r=>r.items.forEach(([name,qty])=>{
+   if(!map.has(name))map.set(name,{qtys:[],name});
+   map.get(name).qtys.push(qty);
+ }));
+
+ const list=[...map.values()].sort((a,b)=>a.name.localeCompare(b.name,'fr'));
+
+ document.getElementById('shoppingList').innerHTML=list.map((it,i)=>`
+ <label class="checkrow">
+   <input type="checkbox" data-item="${encodeURIComponent(it.name)}">
+   <span><b>${it.name}</b><br><span class="small">${it.qtys.join(' + ')}</span></span>
+ </label>`).join('');
+}
+
+document.querySelectorAll('nav button').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b===btn));
+ document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('hidden',s.id!==btn.dataset.tab));
+}));
+
+document.getElementById('generate').addEventListener('click',pickMenu);
+
+document.getElementById('people').addEventListener('change',()=>{
+ if(currentMenu.length){
+   renderMenu(Number(document.getElementById('people').value));
+   renderShopping();
+ }
+});
+
+document.getElementById('quick').addEventListener('change',pickMenu);
+
+document.getElementById('copyList').addEventListener('click',async()=>{
+ const rows=[...document.querySelectorAll('#shoppingList .checkrow')].map(row=>
+   (row.querySelector('input').checked?'[x] ':'[ ] ')+
+   row.querySelector('b').textContent+' — '+
+   row.querySelector('.small').textContent
+ );
+
+ const text='ÉcoCourses — liste de courses\n'+rows.join('\n');
+
+ try{
+   await navigator.clipboard.writeText(text);
+   document.getElementById('copyMessage').textContent='Liste copiée ! Tu peux la coller dans tes notes.';
+ }
+ catch(e){
+   const ta=document.createElement('textarea');
+   ta.value=text;
+   document.body.appendChild(ta);
+   ta.select();
+   document.execCommand('copy');
+   ta.remove();
+   document.getElementById('copyMessage').textContent='Liste prête à copier.';
+   if(!navigator.clipboard)alert(text);
+ }
+});
+
+document.getElementById('resetChecks').addEventListener('click',()=>{
+ document.querySelectorAll('#shoppingList input').forEach(i=>i.checked=false);
+});
+
+document.getElementById('saveSettings').addEventListener('click',()=>{
+ const settings={
+   country:document.getElementById('country').value,
+   radius:document.getElementById('radius').value,
+   budgetLimit:document.getElementById('budgetLimit').value
+ };
+
+ try{
+   localStorage.setItem('ecocourses-settings',JSON.stringify(settings));
+   document.getElementById('settingsMessage').textContent='Préférences enregistrées sur cet appareil.';
+ }
+ catch(e){
+   document.getElementById('settingsMessage').textContent='Préférences utilisées pour cette session.';
+ }
+});
+
+try{
+ const s=JSON.parse(localStorage.getItem('ecocourses-settings')||'null');
+
+ if(s){
+   document.getElementById('country').value=s.country||'both';
+   document.getElementById('radius').value=s.radius||'20 km';
+   document.getElementById('budgetLimit').value=s.budgetLimit||100;
+ }
+}catch(e){}
+
+pickMenu();
+</script>
 </body>
 </html>
