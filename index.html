@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#176b43">
+  <title>ÉcoCourses</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f7f3;
+      color: #203329;
+    }
+    header {
+      background: #176b43;
+      color: white;
+      padding: 25px 20px;
+      border-radius: 0 0 25px 25px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 29px; }
+    header p { margin: 0; line-height: 1.5; }
+    main { padding: 18px; max-width: 600px; margin: auto; }
+    .card {
+      background: white;
+      padding: 18px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      box-shadow: 0 3px 12px #0000000d;
+    }
+    h2 { font-size: 19px; margin-top: 0; }
+    label { display: block; margin: 12px 0 6px; font-weight: bold; }
+    select, input, button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    select, input {
+      border: 1px solid #cbd8ce;
+      background: white;
+    }
+    button {
+      border: none;
+      background: #176b43;
+      color: white;
+      font-weight: bold;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+    button.secondary { background: #e3eee6; color: #176b43; }
+    .dish {
+      padding: 12px 0;
+      border-bottom: 1px solid #e8eee9;
+      line-height: 1.5;
+    }
+    .dish:last-child { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      background: #e3eee6;
+      color: #176b43;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    #shoppingList { padding-left: 22px; line-height: 1.9; }
+    .note { font-size: 13px; color: #66756b; line-height: 1.5; }
+    footer { text-align: center; padding: 20px; color: #66756b; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛒 ÉcoCourses</h1>
+    <p>Mange bien, cuisine portugais et dépense moins ! 🇵🇹</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>📍 Mes courses</h2>
+      <label for="country">Pays des promotions</label>
+      <select id="country">
+        <option value="both">Allemagne et Luxembourg</option>
+        <option value="de">Allemagne</option>
+        <option value="lu">Luxembourg</option>
+      </select>
+
+      <label for="radius">Rayon de recherche</label>
+      <select id="radius">
+        <option value="20">20 km</option>
+      </select>
+
+      <label for="people">Nombre de personnes</label>
+      <select id="people">
+        <option value="1">1 personne</option>
+        <option value="2">2 personnes</option>
+        <option value="3">3 personnes</option>
+        <option value="4" selected>4 personnes</option>
+        <option value="5">5 personnes</option>
+        <option value="6">6 personnes</option>
+      </select>
+      <p class="note">Les promotions réelles seront ajoutées lorsque nous connecterons les sources des magasins.</p>
+    </section>
+
+    <section class="card">
+      <h2>🍲 Mes menus portugais</h2>
+      <p>Des idées pour la semaine, avec des repas rapides quand tu manques de temps.</p>
+      <div id="menus">
+        <div class="dish">🇵🇹 <b>Lundi — Frango assado</b><br>Poulet rôti avec pommes de terre.</div>
+        <div class="dish">🇵🇹 <b>Mardi — Bacalhau à Brás</b><br>Morue, pommes de terre et œufs.</div>
+        <div class="dish">⏱️ <b>Mercredi — Pâtes rapides</b><br>Pâtes à la tomate et au thon.</div>
+        <div class="dish">🇵🇹 <b>Jeudi — Bifanas</b><br>Sandwichs portugais au porc.</div>
+        <div class="dish">⏱️ <b>Vendredi — Omelette</b><br>Omelette, salade et pain.</div>
+        <div class="dish">🇵🇹 <b>Samedi — Caldo verde</b><br>Soupe portugaise au chou et au chouriço.</div>
+        <div class="dish">🇵🇹 <b>Dimanche — Arroz de pato</b><br>Riz traditionnel au canard.</div>
+      </div>
+      <button onclick="generateMenus()">🔄 Changer les menus</button>
+    </section>
+
+    <section class="card">
+      <h2>🧾 Ma liste de courses</h2>
+      <p>Une première liste d'ingrédients à adapter à tes menus.</p>
+      <ul id="shoppingList">
+        <li>Poulet</li>
+        <li>Morue</li>
+        <li>Pommes de terre</li>
+        <li>Œufs</li>
+        <li>Pâtes</li>
+        <li>Tomates</li>
+        <li>Thon</li>
+        <li>Porc</li>
+        <li>Chou vert</li>
+        <li>Riz</li>
+      </ul>
+      <button class="secondary" onclick="copyList()">📋 Copier ma liste</button>
+      <p id="message" class="note"></p>
+    </section>
+  </main>
+
+  <footer>
+    ÉcoCourses · La cuisine portugaise au meilleur prix 🇵🇹
+  </footer>
+
+  <script>
+    const menuSets = [
+      [
+        ["🇵🇹 Lundi — Frango assado", "Poulet rôti avec pommes de terre."],
+        ["🇵🇹 Mardi — Bacalhau à Brás", "Morue, pommes de terre et œufs."],
+        ["⏱️ Mercredi — Pâtes rapides", "Pâtes à la tomate et au thon."],
+        ["🇵🇹 Jeudi — Bifanas", "Sandwichs portugais au porc."],
+        ["⏱️ Vendredi — Omelette", "Omelette, salade et pain."],
+        ["🇵🇹 Samedi — Caldo verde", "Soupe au chou et au chouriço."],
+        ["🇵🇹 Dimanche — Arroz de pato", "Riz traditionnel au canard."]
+      ],
+      [
+        ["🇵🇹 Lundi — Almôndegas", "Boulettes de viande avec riz."],
+        ["⏱️ Mardi — Salade de thon", "Salade rapide avec pommes de terre."],
+        ["🇵🇹 Mercredi — Arroz de frango", "Riz au poulet à la portugaise."],
+        ["🇵🇹 Jeudi — Bacalhau no forno", "Morue au four avec légumes."],
+        ["⏱️ Vendredi — Pâtes au jambon", "Un repas rapide pour le soir."],
+        ["🇵🇹 Samedi — Feijoada", "Ragoût portugais aux haricots."],
+        ["🇵🇹 Dimanche — Carne assada", "Viande rôtie avec pommes de terre."]
+      ]
+    ];
+
+    function generateMenus() {
+      const current = document.getElementById("menus").dataset.set === "1" ? 0 : 1;
+      const selected = menuSets[current];
+      document.getElementById("menus").dataset.set = String(current);
+      document.getElementById("menus").innerHTML = selected.map(item =>
+        '<div class="dish"><b>' + item[0] + '</b><br>' + item[1] + '</div>'
+      ).join("");
+    }
+
+    async function copyList() {
+      const items = [...document.querySelectorAll("#shoppingList li")]
+        .map(item => "• " + item.textContent).join("\n");
+      try {
+        await navigator.clipboard.writeText(items);
+        document.getElementById("message").textContent = "Liste copiée ! Tu peux la coller dans tes notes.";
+      } catch (e) {
+        document.getElementById("message").textContent = items;
+      }
+    }
+  </script>
+</body>
+</html>
